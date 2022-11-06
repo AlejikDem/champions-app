@@ -1,0 +1,1 @@
+export const marvelApiEndpoint = 'https://marvelcdb.com/api/public';

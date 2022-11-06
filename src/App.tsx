@@ -1,21 +1,17 @@
 import React from 'react';
 import './App.css';
 
-import cards from './cards.json';
+import { CardsContextProvider } from './CardsContext';
+
+import { DeckBuilder } from './Deckbuilder';
 
 function App() {
   return (
-    <div className="App">
-      {cards.hero.iron_man.map(card => {
-        return (
-          <img
-            key={card.code}
-            src={`${process.env.PUBLIC_URL}/assets/images/${card.code}.png`}
-            alt={card.code}
-          />
-        )
-      })}
-    </div>
+    <CardsContextProvider>
+      <div className="Wrapper">
+        <DeckBuilder />
+      </div>
+    </CardsContextProvider>
   );
 }
 

@@ -19,29 +19,29 @@ export enum EncounterName {
   ULTRON = 'ultron',
 }
 
-export type Card = any;
+export type CardType = any;
 
 export type Cards = {
   heroes: {
-    [key in HeroName]?: Card[]
+    [key in HeroName]?: CardType[]
   },
   obligations: {
-    [key in HeroName]?: Card[]
+    [key in HeroName]?: CardType[]
   },
   factions: {
-    [key in Faction]?: Card[]
+    [key in Faction]?: CardType[]
   },
   encounters: {
-    [key in EncounterName]?: Card[]
+    [key in EncounterName]?: CardType[]
   },
   nemesis: {
-    [key in HeroName]?: Card[]
+    [key in HeroName]?: CardType[]
   },
   basic: {
-    hero: Card[],
-    encounter: Card[],
+    hero: CardType[],
+    encounter: CardType[],
   },
   scenarios: {
-    [key: string]: Card[]
+    [key: string]: CardType[]
   },
 }

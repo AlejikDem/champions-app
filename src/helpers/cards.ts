@@ -2,7 +2,7 @@ import {
   Faction,
   HeroName,
   EncounterName,
-  Card,
+  CardType,
   Cards
 } from '../types';
 
@@ -10,7 +10,7 @@ export const addCardToDeck = <T,>(list: T[] | undefined, card: T) => {
   return [...(list || []), card];
 };
 
-export const prepareCards = (cards: Card[]): Cards => {
+export const prepareCards = (cards: CardType[]): Cards => {
   const emptyDeck: Cards = {
     heroes: {},
     obligations: {},

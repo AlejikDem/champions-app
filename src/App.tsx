@@ -1,17 +1,18 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { CardsContextProvider } from './CardsContext';
-
-import { DeckBuilder } from './Deckbuilder';
+import { DeckBuilder } from './pages/Deckbuilder';
+import styles from './App.module.css';
 
 function App() {
   return (
-    <CardsContextProvider>
-      <div className="Wrapper">
-        <DeckBuilder />
-      </div>
-    </CardsContextProvider>
+    <div className={styles.Wrapper}>
+      <Router>
+        <Routes>
+          <Route path='/' element={<DeckBuilder />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

@@ -60,3 +60,11 @@ export const prepareCards = (cards: Card[]): Cards => {
 
   return coreDeck;
 };
+
+export const heroesInfo = {
+  [HeroName.BLACK_PANTHER]: { name: 'Black Panther' },
+  [HeroName.CAPTAIN_MARVEL]: { name: 'Captain Marvel' },
+  [HeroName.SHE_HULK]: { name: 'She Hulk' },
+  [HeroName.SPIDER_MAN]: { name: 'Spider Man' },
+  [HeroName.IRON_MAN]: { name: 'Iron Man' },
+};

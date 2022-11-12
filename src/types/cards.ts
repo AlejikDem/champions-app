@@ -19,6 +19,20 @@ export enum EncounterName {
   ULTRON = 'ultron',
 }
 
+export enum DeckBuilStep {
+  HERO = 'hero',
+  FACTION = 'faction',
+  ENCOUNTER = 'encounter',
+  SCENARIO = 'scenario'
+};
+
+export type DeckInfo = {
+  [DeckBuilStep.HERO]: HeroName;
+  [DeckBuilStep.FACTION]: Faction;
+  [DeckBuilStep.ENCOUNTER]: EncounterName;
+  [DeckBuilStep.SCENARIO]: string;
+};
+
 export type CardType = any;
 
 export type Cards = {

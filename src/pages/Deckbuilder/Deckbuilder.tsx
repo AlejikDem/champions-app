@@ -1,82 +1,121 @@
 import React, { useState } from 'react';
+import cn from 'classnames';
 
 import { useCardsContext } from '../../CardsContext';
-import { HeroName, Faction, EncounterName } from '../../types';
+import {
+  HeroName,
+  Faction,
+  EncounterName,
+  DeckInfo,
+  DeckBuilStep
+} from '../../types';
 import { heroesInfo } from '../../helpers';
 
+import { DeckMainInfo } from '../../components/DeckMainInfo';
 import { Pill } from '../../components/Pill';
 import { Card } from '../../components/Card';
-import styles from './Deckbuilder.module.css';
-
-type DeckInfo = {
-  hero: HeroName;
-  faction: Faction;
-  encounter: EncounterName;
-  scenario: string;
-};
-
-enum Step {
-  HERO = 'hero',
-  FACTION = 'faction',
-  ENCOUNTER = 'encounter',
-  SCENARIO = 'scenario'
-};
+import styles from './Deckbuilder.module.scss';
 
 export const DeckBuilder = () => {
   const { cards, isLoaded } = useCardsContext();
-  const [ activeStep, setActiveStep ] = useState<Step>(Step.HERO);
-  const stepsOrder = [Step.HERO, Step.FACTION, Step.ENCOUNTER, Step.SCENARIO];
+  const stepsOrder = [DeckBuilStep.HERO, DeckBuilStep.FACTION, DeckBuilStep.ENCOUNTER, DeckBuilStep.SCENARIO];
+  const [ activeStep, setActiveStep ] = useState<DeckBuilStep>(stepsOrder[0]);
+  const activeStepIndex = stepsOrder.findIndex(item => item === activeStep);
+  const [ deckInfo, setDeckInfo ] = useState<DeckInfo>({
+    hero: null,
+    faction: null,
+    encounter: null,
+    scenario: null,
+  });
+
+  if (!isLoaded) return null;
 
   const stepsInfo = {
-    [Step.HERO]: {}
+    [DeckBuilStep.HERO]: {
+      cardsCollection: cards.heroes,
+      itemsCollection: Object.values(HeroName),
+      getItemLabel: (item) => heroesInfo[item].name,
+    },
+    [DeckBuilStep.FACTION]: {
+      cardsCollection: cards.factions,
+      itemsCollection: Object.values(Faction),
+      getItemLabel: (item) => item,
+    },
+    [DeckBuilStep.ENCOUNTER]: {
+      cardsCollection: cards.encounters,
+      itemsCollection: Object.values(EncounterName),
+      getItemLabel: (item) => item,
+    },
+    [DeckBuilStep.SCENARIO]: {
+      cardsCollection: cards.scenarios,
+      itemsCollection: ['1', '2'],
+      getItemLabel: (item) => item,
+    },
   }
 
-  const heroes = Object.values(HeroName);
-  const factions = Object.values(Faction);
-  const encounters = Object.values(EncounterName);
-
-  const [ deckInfo, setDeckInfo ] = useState<DeckInfo>({
-    hero: heroes[0],
-    faction: factions[0],
-    encounter: encounters[0],
-    scenario: '1',
-  });
-  const updateDeck = (prop: keyof DeckInfo, value: string) => {
+  const updateDeckInfo = (prop: keyof DeckInfo, value: string) => {
     setDeckInfo({
       ...deckInfo,
       [prop]: value
     });
-  }
+  };
 
+  const {
+    itemsCollection,
+    cardsCollection,
+    getItemLabel,
+  } = stepsInfo[activeStep];
+  const currentStepProp = deckInfo[activeStep];
 
-  if (!isLoaded) return null;
+  const isFirstStep = activeStepIndex === 0;
+  const isLastStep = activeStepIndex === stepsOrder.length - 1;
+
+  const setNextStep = () => {
+    if (!currentStepProp) return null;
+    setActiveStep(stepsOrder[activeStepIndex + 1]);
+  };
+
+  const setPrevStep = () => {
+    setActiveStep(stepsOrder[activeStepIndex - 1]);
+  };
 
   return (
     <div className={styles.Container}>
       <div className={styles.PageTitle}>Form you deck</div>
       <div className={styles.Header}>
-        <div className={styles.StepTitle}>Choose hero</div>
+        <div className={styles.StepTitle}>
+          {!isFirstStep && (
+            <span
+              className={cn(styles.Arrow, styles.Prev)}
+              onClick={setPrevStep}
+            />
+          )}
+          <span>Choose hero</span>
+          {!isLastStep && (
+            <span
+              className={cn(styles.Arrow, styles.Next, {
+                [styles.Disabled]: !currentStepProp
+              })}
+              onClick={setNextStep}
+            />
+          )}
+        </div>
         <div className={styles.HeaderMain}>
-          <div className={styles.DeckInfo}>
-            <div className={styles.DeckInfoRow}>
-              <div>Hero: </div>
-              <div>{heroesInfo[deckInfo.hero].name}</div>
-            </div>
-          </div>
+          <DeckMainInfo deckInfo={deckInfo} />
           <div className={styles.ItemsList}>
-            {heroes.map(heroName => (
+            {itemsCollection.map(itemName => (
               <Pill
-                key={heroName}
-                label={heroesInfo[heroName].name}
-                isActive={heroName === deckInfo.hero}
-                onClick={updateDeck.bind(null, 'hero', heroName)}
+                key={itemName}
+                label={getItemLabel(itemName)}
+                isActive={itemName === currentStepProp}
+                onClick={updateDeckInfo.bind(null, activeStep, itemName)}
               />
             ))}
           </div>
         </div>
       </div>
       <div className={styles.SectionCards}>
-        {cards?.heroes[deckInfo.hero]?.map(card => {
+        {currentStepProp && cardsCollection[currentStepProp]?.map(card => {
           return (
             <Card
               key={card.code}

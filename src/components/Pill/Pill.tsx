@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 
-import styles from './Pill.module.css';
+import styles from './Pill.module.scss';
 
 interface PillProps {
   label: string;

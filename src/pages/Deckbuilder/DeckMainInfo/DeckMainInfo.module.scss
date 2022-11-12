@@ -1,0 +1,16 @@
+.DeckMainInfo {
+  width: 20%;
+  border: 2px solid red;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.DeckMainInfoRow {
+  display: flex;
+  margin-bottom: 8px;
+
+  div:first-child {
+    font-weight: 600;
+    margin-right: 8px;
+  }
+}

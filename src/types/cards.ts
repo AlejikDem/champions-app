@@ -19,6 +19,14 @@ export enum EncounterName {
   ULTRON = 'ultron',
 }
 
+export enum ScenarioName {
+  BOMB_SCARE = 'bomb_scare',
+  LEGIONS_OF_HYDRA = 'legions_of_hydra',
+  MASTERS_OF_EVIL = 'masters_of_evil',
+  THE_DOOMSDAY_CHAIR = 'the_doomsday_chair',
+  UNDER_ATTACK = 'under_attack'
+}
+
 export enum DeckBuilStep {
   HERO = 'hero',
   FACTION = 'faction',
@@ -30,7 +38,7 @@ export type DeckInfo = {
   [DeckBuilStep.HERO]: HeroName;
   [DeckBuilStep.FACTION]: Faction;
   [DeckBuilStep.ENCOUNTER]: EncounterName;
-  [DeckBuilStep.SCENARIO]: string;
+  [DeckBuilStep.SCENARIO]: ScenarioName;
 };
 
 export type CardType = any;

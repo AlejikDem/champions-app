@@ -9,10 +9,34 @@
   margin-bottom: 16px;
 }
 
+.HeaderTop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.Arrow {
+  width: 0;
+  height: 0;
+  border-left: 16px solid transparent;
+  border-right: 16px solid transparent;
+  border-bottom: 24px solid green;
+  cursor: pointer;
+
+  &.Left {
+    transform: rotate(-90deg);
+  }
+
+  &.Right {
+    transform: rotate(90deg);
+  }
+}
+
 .StepTitle {
+  margin: 0 8px;
   font-size: 24px;
   text-align: center;
-  margin-bottom: 16px;
 }
 
 .HeaderMain {

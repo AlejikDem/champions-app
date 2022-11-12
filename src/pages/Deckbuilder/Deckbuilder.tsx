@@ -6,12 +6,13 @@ import {
   HeroName,
   Faction,
   EncounterName,
+  ScenarioName,
   DeckInfo,
   DeckBuilStep
 } from '../../types';
-import { heroesInfo } from '../../helpers';
+import { snakeCaseToCapitalized } from '../../helpers';
 
-import { DeckMainInfo } from '../../components/DeckMainInfo';
+import { DeckMainInfo } from './DeckMainInfo';
 import { Pill } from '../../components/Pill';
 import { Card } from '../../components/Card';
 import styles from './Deckbuilder.module.scss';
@@ -32,24 +33,24 @@ export const DeckBuilder = () => {
 
   const stepsInfo = {
     [DeckBuilStep.HERO]: {
+      title: 'Choose Hero',
       cardsCollection: cards.heroes,
       itemsCollection: Object.values(HeroName),
-      getItemLabel: (item) => heroesInfo[item].name,
     },
     [DeckBuilStep.FACTION]: {
+      title: 'Choose Faction',
       cardsCollection: cards.factions,
       itemsCollection: Object.values(Faction),
-      getItemLabel: (item) => item,
     },
     [DeckBuilStep.ENCOUNTER]: {
+      title: 'Choose Encounter',
       cardsCollection: cards.encounters,
       itemsCollection: Object.values(EncounterName),
-      getItemLabel: (item) => item,
     },
     [DeckBuilStep.SCENARIO]: {
+      title: 'Choose Scenario',
       cardsCollection: cards.scenarios,
-      itemsCollection: ['1', '2'],
-      getItemLabel: (item) => item,
+      itemsCollection: Object.values(ScenarioName),
     },
   }
 
@@ -61,9 +62,9 @@ export const DeckBuilder = () => {
   };
 
   const {
+    title,
     itemsCollection,
     cardsCollection,
-    getItemLabel,
   } = stepsInfo[activeStep];
   const currentStepProp = deckInfo[activeStep];
 
@@ -83,17 +84,17 @@ export const DeckBuilder = () => {
     <div className={styles.Container}>
       <div className={styles.PageTitle}>Form you deck</div>
       <div className={styles.Header}>
-        <div className={styles.StepTitle}>
+        <div className={styles.HeaderTop}>
           {!isFirstStep && (
             <span
-              className={cn(styles.Arrow, styles.Prev)}
+              className={cn(styles.Arrow, styles.Left)}
               onClick={setPrevStep}
             />
           )}
-          <span>Choose hero</span>
+          <div className={styles.StepTitle}>{title}</div>
           {!isLastStep && (
             <span
-              className={cn(styles.Arrow, styles.Next, {
+              className={cn(styles.Arrow, styles.Right, {
                 [styles.Disabled]: !currentStepProp
               })}
               onClick={setNextStep}
@@ -106,7 +107,7 @@ export const DeckBuilder = () => {
             {itemsCollection.map(itemName => (
               <Pill
                 key={itemName}
-                label={getItemLabel(itemName)}
+                label={snakeCaseToCapitalized(itemName)}
                 isActive={itemName === currentStepProp}
                 onClick={updateDeckInfo.bind(null, activeStep, itemName)}
               />
@@ -114,17 +115,19 @@ export const DeckBuilder = () => {
           </div>
         </div>
       </div>
-      <div className={styles.SectionCards}>
-        {currentStepProp && cardsCollection[currentStepProp]?.map(card => {
-          return (
-            <Card
-              key={card.code}
-              card={card}
-              addClassName={styles.Card}
-            />
-          )
-        })}
-      </div>
+      {currentStepProp && (
+        <div className={styles.SectionCards}>
+          {cardsCollection[currentStepProp]?.map(card => {
+            return (
+              <Card
+                key={card.code}
+                card={card}
+                addClassName={styles.Card}
+              />
+            )
+          })}
+        </div>
+      )}
     </div>
   );
 };

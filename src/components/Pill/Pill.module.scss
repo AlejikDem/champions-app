@@ -1,11 +1,20 @@
+@use '../../assets/styles/variables' as v;
+
 .Pill {
   padding: 8px;
-  border: 1px solid grey;
+  border: 1px solid v.$grey;
   border-radius: 10px;
   margin-right: 8px;
   margin-bottom: 8px;
 
   &.Clickable {
     cursor: pointer;
+  }
+
+  &.Active {
+    cursor: default;
+    border-color: v.$green;
+    background-color: v.$green;
+    color: v.$white;
   }
 }

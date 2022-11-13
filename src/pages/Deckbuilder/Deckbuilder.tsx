@@ -54,6 +54,14 @@ export const DeckBuilder = () => {
     },
   }
 
+  const pillsColorsInfo = {
+    [HeroName.BLACK_PANTHER]: { active: '#46295d' },
+    [HeroName.SHE_HULK]: { active: '#46295d' },
+    [HeroName.SPIDER_MAN]: { active: '#922d2c' },
+    [HeroName.IRON_MAN]: { active: '#922d2c' },
+    [HeroName.CAPTAIN_MARVEL]: { active: '#2f3592' },
+  }
+
   const updateDeckInfo = (prop: keyof DeckInfo, value: string) => {
     setDeckInfo({
       ...deckInfo,
@@ -110,6 +118,7 @@ export const DeckBuilder = () => {
                 label={snakeCaseToCapitalized(itemName)}
                 isActive={itemName === currentStepProp}
                 onClick={updateDeckInfo.bind(null, activeStep, itemName)}
+                colorsInfo={pillsColorsInfo[itemName]}
               />
             ))}
           </div>

@@ -1,9 +1,11 @@
-@import './assets/styles/reset.css';
-@import './assets/styles/fonts.css';
+@use './assets/styles/reset.scss';
+@use './assets/styles/fonts.scss';
+@use './assets/styles/variables.scss' as v;
 
 body {
   margin: 0;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: v.$black;
 }

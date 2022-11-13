@@ -7,16 +7,41 @@ interface PillProps {
   label: string;
   isActive?: boolean;
   onClick?: () => void;
+  colorsInfo?: {
+    default?: string;
+    active?: string;
+  }
 }
 
-export const Pill: React.FC<PillProps> = ({ label, isActive, onClick }) => {
+export const Pill: React.FC<PillProps> = ({
+  label,
+  isActive,
+  onClick,
+  colorsInfo,
+}) => {
+  let addStyles = {};
+
+  if (colorsInfo) {
+    if (colorsInfo.active && isActive) {
+      addStyles = {
+        backgroundColor: colorsInfo.active,
+        borderColor: colorsInfo.active,
+      }
+    };
+    if (!isActive && colorsInfo.default) {
+      addStyles = { borderColor: colorsInfo.default }
+    }
+  }
+
   return (
     <div
       className={cn(styles.Pill, {
         [styles.Clickable]: !!onClick,
         [styles.Active]: isActive,
       })}
-      onClick={onClick}
+      onClick={!isActive && !!onClick ? onClick : null}
+      data-testid={`pill-${label}`}
+      style={{...addStyles}}
     >
       {label}
     </div>

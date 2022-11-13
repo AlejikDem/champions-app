@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { DeckBuilder } from './pages/Deckbuilder';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 
 function App() {
   return (

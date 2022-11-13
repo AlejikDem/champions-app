@@ -63,17 +63,13 @@
 .SectionCards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
   border: 2px solid grey;
   border-radius: 12px;
-  padding: 16px;
+  padding: 16px 24px;
 }
 
 .Card {
-  margin-right: 16px;
   margin-bottom: 16px;
-
-  &:nth-child(5n) {
-    margin-right: 0;
-  }
 }

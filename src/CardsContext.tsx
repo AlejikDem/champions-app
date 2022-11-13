@@ -5,6 +5,7 @@ import React, {
   createContext
 } from 'react';
 import axios from 'axios';
+// import data from './__tests__/response.json';
 
 import { marvelApiEndpoint, prepareCards } from './helpers';
 import { Cards } from './types';

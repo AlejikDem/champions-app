@@ -132,6 +132,7 @@ export const DeckBuilder = () => {
                 key={card.code}
                 card={card}
                 addClassName={styles.Card}
+                showQuantity
               />
             )
           })}

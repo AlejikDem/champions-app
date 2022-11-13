@@ -1,0 +1,27 @@
+@use '../../assets/styles/variables.scss' as v;
+
+.Card {
+  position: relative;
+  width: 220px;
+
+  &.Horizontal {
+    width: 440px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.Quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -16px;
+  width: 32px;
+  height: 32px;
+  background-color: v.$olive;
+}
